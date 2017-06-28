@@ -40,6 +40,9 @@ public class CacheConfiguration {
             cm.createCache(dk.roninit.lop.admin.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(dk.roninit.lop.admin.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(dk.roninit.lop.admin.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(dk.roninit.lop.admin.domain.MarkedItem.class.getName(), jcacheConfiguration);
+            cm.createCache(dk.roninit.lop.admin.domain.MarkedItem.class.getName() + ".dateIntervals", jcacheConfiguration);
+            cm.createCache(dk.roninit.lop.admin.domain.DateInterval.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

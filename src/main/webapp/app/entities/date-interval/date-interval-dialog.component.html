@@ -1,0 +1,64 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDateIntervalLabel">Create or edit a Date Interval</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!dateInterval.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="dateInterval.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_fromDate">From Date</label>
+            <div class="input-group">
+                <input id="field_fromDate" type="text" class="form-control" name="fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" [(ngModel)]="dateInterval.fromDate"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="fromDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.fromDate?.dirty && editForm.controls.fromDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.fromDate?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_toDate">To Date</label>
+            <div class="input-group">
+                <input id="field_toDate" type="text" class="form-control" name="toDate" ngbDatepicker  #toDateDp="ngbDatepicker" [(ngModel)]="dateInterval.toDate"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="toDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.toDate?.dirty && editForm.controls.toDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.toDate?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_markedItem">Marked Item</label>
+            <select class="form-control" id="field_markedItem" name="markedItem" [(ngModel)]="dateInterval.markedItem" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="markedItemOption.id === dateInterval.markedItem?.id ? dateInterval.markedItem : markedItemOption" *ngFor="let markedItemOption of markeditems; trackBy: trackMarkedItemById">{{markedItemOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
