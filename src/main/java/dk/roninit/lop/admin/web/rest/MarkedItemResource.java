@@ -1,6 +1,7 @@
 package dk.roninit.lop.admin.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import dk.roninit.lop.admin.domain.DateInterval;
 import dk.roninit.lop.admin.domain.MarkedItem;
 
 import dk.roninit.lop.admin.repository.MarkedItemRepository;
@@ -16,9 +17,13 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -96,7 +101,10 @@ public class MarkedItemResource {
     @Timed
     public List<MarkedItem> getAllMarkedItems() {
         log.debug("REST request to get all MarkedItems");
-        return markedItemRepository.findAll();
+        List<MarkedItem> all = markedItemRepository.findAll();
+        // clear all
+        all.stream().forEach(e -> e.getDateIntervals().stream().forEach(it -> it.setMarkedItem(null)));
+        return all;
     }
 
     /**

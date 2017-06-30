@@ -68,8 +68,7 @@ public class MarkedItem implements Serializable {
     @Column(name = "enable_booking", nullable = false)
     private Boolean enableBooking;
 
-    @OneToMany(mappedBy = "markedItem")
-    @JsonIgnore
+    @OneToMany(mappedBy = "markedItem", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<DateInterval> dateIntervals = new HashSet<>();
 
