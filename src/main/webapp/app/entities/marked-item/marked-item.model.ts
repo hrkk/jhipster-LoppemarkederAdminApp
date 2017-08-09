@@ -1,4 +1,5 @@
 import { DateInterval } from '../date-interval';
+import { Organizer } from '../organizer';
 export class MarkedItem {
     constructor(
         public id?: number,
@@ -12,6 +13,7 @@ export class MarkedItem {
         public longitude?: number,
         public enableBooking?: boolean,
         public dateInterval?: DateInterval,
+        public organizer?: Organizer,
     ) {
         this.enableBooking = false;
     }

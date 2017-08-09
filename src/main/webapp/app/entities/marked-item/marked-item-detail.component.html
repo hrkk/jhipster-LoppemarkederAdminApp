@@ -40,6 +40,12 @@
         <dd>
             <span>{{markedItem.enableBooking}}</span>
         </dd>
+        <dt><span>Organizer</span></dt>
+        <dd>
+            <div *ngIf="markedItem.organizer">
+                <a [routerLink]="['/organizer', markedItem.organizer?.id]">{{markedItem.organizer?.id}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

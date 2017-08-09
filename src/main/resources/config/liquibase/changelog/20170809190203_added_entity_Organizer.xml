@@ -15,10 +15,10 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity MarkedItem.
+        Added the entity Organizer.
     -->
-    <changeSet id="20170628034636-1" author="jhipster">
-        <createTable tableName="marked_item">
+    <changeSet id="20170809190203-1" author="jhipster">
+        <createTable tableName="organizer">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -26,40 +26,16 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="marked_information" type="varchar(256)">
+            <column name="email" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="marked_rules" type="varchar(256)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="entre_info" type="varchar(256)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="date_extra_info" type="varchar(256)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="address" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="latitude" type="double">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="longitude" type="double">
+            <column name="phone" type="varchar(8)">
                 <constraints nullable="false" />
             </column>
 
             <column name="enable_booking" type="bit">
                 <constraints nullable="false" />
-            </column>
-
-            <column name="organizer_id" type="bigint">
-                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

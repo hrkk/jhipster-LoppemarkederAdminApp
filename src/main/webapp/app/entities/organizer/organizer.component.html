@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span>Marked Items</span>
-        <button class="btn btn-primary float-right create-marked-item" [routerLink]="['/', { outlets: { popup: ['marked-item-new'] } }]">
+        <span>Organizers</span>
+        <button class="btn btn-primary float-right create-organizer" [routerLink]="['/', { outlets: { popup: ['organizer-new'] } }]">
             <span class="fa fa-plus"></span>
             <span class="hidden-sm-down" >
-            Create new Marked Item
+            Create new Organizer
             </span>
         </button>
     </h2>
@@ -25,58 +25,42 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="markedItems">
+    <div class="table-responsive" *ngIf="organizers">
         <table class="table table-striped">
             <thead>
             <tr>
             <th><span>ID</span></th>
             <th><span>Name</span></th>
-            <th><span>Marked Information</span></th>
-            <th><span>Marked Rules</span></th>
-            <th><span>Entre Info</span></th>
-            <th><span>Date Extra Info</span></th>
-            <th><span>Address</span></th>
-            <th><span>Latitude</span></th>
-            <th><span>Longitude</span></th>
+            <th><span>Email</span></th>
+            <th><span>Phone</span></th>
             <th><span>Enable Booking</span></th>
-            <th><span>Organizer</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let markedItem of markedItems ;trackBy: trackId">
-                <td><a [routerLink]="['../marked-item', markedItem.id ]">{{markedItem.id}}</a></td>
-                <td>{{markedItem.name}}</td>
-                <td>{{markedItem.markedInformation}}</td>
-                <td>{{markedItem.markedRules}}</td>
-                <td>{{markedItem.entreInfo}}</td>
-                <td>{{markedItem.dateExtraInfo}}</td>
-                <td>{{markedItem.address}}</td>
-                <td>{{markedItem.latitude}}</td>
-                <td>{{markedItem.longitude}}</td>
-                <td>{{markedItem.enableBooking}}</td>
-                <td>
-                    <div *ngIf="markedItem.organizer">
-                        <a [routerLink]="['../organizer', markedItem.organizer?.id ]" >{{markedItem.organizer?.id}}</a>
-                    </div>
-                </td>
+            <tr *ngFor="let organizer of organizers ;trackBy: trackId">
+                <td><a [routerLink]="['../organizer', organizer.id ]">{{organizer.id}}</a></td>
+                <td>{{organizer.name}}</td>
+                <td>{{organizer.email}}</td>
+                <td>{{organizer.phone}}</td>
+                <td>{{organizer.enableBooking}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../marked-item', markedItem.id ]"
+                                [routerLink]="['../organizer', organizer.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'marked-item/'+ markedItem.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'organizer/'+ organizer.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="hidden-md-down">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'marked-item/'+ markedItem.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'organizer/'+ organizer.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>

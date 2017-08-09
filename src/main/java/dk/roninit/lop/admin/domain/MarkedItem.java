@@ -68,9 +68,13 @@ public class MarkedItem implements Serializable {
     @Column(name = "enable_booking", nullable = false)
     private Boolean enableBooking;
 
-    @OneToMany(mappedBy = "markedItem", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "markedItem")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<DateInterval> dateIntervals = new HashSet<>();
+
+    @ManyToOne
+    private Organizer organizer;
 
     public Long getId() {
         return id;
@@ -220,6 +224,19 @@ public class MarkedItem implements Serializable {
 
     public void setDateIntervals(Set<DateInterval> dateIntervals) {
         this.dateIntervals = dateIntervals;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public MarkedItem organizer(Organizer organizer) {
+        this.organizer = organizer;
+        return this;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
     }
 
     @Override

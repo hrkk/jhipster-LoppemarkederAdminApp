@@ -6,6 +6,12 @@
             "relationshipName": "dateInterval",
             "otherEntityName": "dateInterval",
             "otherEntityRelationshipName": "markedItem"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "organizer",
+            "otherEntityName": "organizer",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
