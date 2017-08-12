@@ -6,28 +6,23 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
 
-import { Marked } from './marked.model';
-import { MarkedPopupService } from './marked-popup.service';
-import { MarkedService } from './marked.service';
-import { Organizer, OrganizerService } from '../organizer';
-import { ResponseWrapper } from '../../shared';
+import { Organizer } from './organizer.model';
+import { OrganizerPopupService } from './organizer-popup.service';
+import { OrganizerService } from './organizer.service';
 
 @Component({
-    selector: 'jhi-marked-dialog',
-    templateUrl: './marked-dialog.component.html'
+    selector: 'jhi-organizer-dialog',
+    templateUrl: './organizer-dialog.component.html'
 })
-export class MarkedDialogComponent implements OnInit {
+export class OrganizerDialogComponent implements OnInit {
 
-    marked: Marked;
+    organizer: Organizer;
     authorities: any[];
     isSaving: boolean;
-
-    organizers: Organizer[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
-        private markedService: MarkedService,
         private organizerService: OrganizerService,
         private eventManager: EventManager
     ) {
@@ -36,8 +31,6 @@ export class MarkedDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.organizerService.query()
-            .subscribe((res: ResponseWrapper) => { this.organizers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -46,27 +39,27 @@ export class MarkedDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.marked.id !== undefined) {
+        if (this.organizer.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.markedService.update(this.marked), false);
+                this.organizerService.update(this.organizer), false);
         } else {
             this.subscribeToSaveResponse(
-                this.markedService.create(this.marked), true);
+                this.organizerService.create(this.organizer), true);
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Marked>, isCreated: boolean) {
-        result.subscribe((res: Marked) =>
+    private subscribeToSaveResponse(result: Observable<Organizer>, isCreated: boolean) {
+        result.subscribe((res: Organizer) =>
             this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Marked, isCreated: boolean) {
+    private onSaveSuccess(result: Organizer, isCreated: boolean) {
         this.alertService.success(
-            isCreated ? `A new Marked is created with identifier ${result.id}`
-            : `A Marked is updated with identifier ${result.id}`,
+            isCreated ? `A new Organizer is created with identifier ${result.id}`
+            : `A Organizer is updated with identifier ${result.id}`,
             null, null);
 
-        this.eventManager.broadcast({ name: 'markedListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'organizerListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -84,34 +77,30 @@ export class MarkedDialogComponent implements OnInit {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
-    trackOrganizerById(index: number, item: Organizer) {
-        return item.id;
-    }
 }
 
 @Component({
-    selector: 'jhi-marked-popup',
+    selector: 'jhi-organizer-popup',
     template: ''
 })
-export class MarkedPopupComponent implements OnInit, OnDestroy {
+export class OrganizerPopupComponent implements OnInit, OnDestroy {
 
     modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private markedPopupService: MarkedPopupService
+        private organizerPopupService: OrganizerPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
-                this.modalRef = this.markedPopupService
-                    .open(MarkedDialogComponent, params['id']);
+                this.modalRef = this.organizerPopupService
+                    .open(OrganizerDialogComponent, params['id']);
             } else {
-                this.modalRef = this.markedPopupService
-                    .open(MarkedDialogComponent);
+                this.modalRef = this.organizerPopupService
+                    .open(OrganizerDialogComponent);
             }
         });
     }

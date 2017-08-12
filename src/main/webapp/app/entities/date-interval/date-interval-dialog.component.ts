@@ -6,29 +6,31 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
 
-import { Marked } from './marked.model';
-import { MarkedPopupService } from './marked-popup.service';
-import { MarkedService } from './marked.service';
-import { Organizer, OrganizerService } from '../organizer';
+import { DateInterval } from './date-interval.model';
+import { DateIntervalPopupService } from './date-interval-popup.service';
+import { DateIntervalService } from './date-interval.service';
+import { Marked, MarkedService } from '../marked';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
-    selector: 'jhi-marked-dialog',
-    templateUrl: './marked-dialog.component.html'
+    selector: 'jhi-date-interval-dialog',
+    templateUrl: './date-interval-dialog.component.html'
 })
-export class MarkedDialogComponent implements OnInit {
+export class DateIntervalDialogComponent implements OnInit {
 
-    marked: Marked;
+    dateInterval: DateInterval;
     authorities: any[];
     isSaving: boolean;
 
-    organizers: Organizer[];
+    markeds: Marked[];
+    fromDateDp: any;
+    toDateDp: any;
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
+        private dateIntervalService: DateIntervalService,
         private markedService: MarkedService,
-        private organizerService: OrganizerService,
         private eventManager: EventManager
     ) {
     }
@@ -36,8 +38,8 @@ export class MarkedDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.organizerService.query()
-            .subscribe((res: ResponseWrapper) => { this.organizers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.markedService.query()
+            .subscribe((res: ResponseWrapper) => { this.markeds = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -46,27 +48,27 @@ export class MarkedDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.marked.id !== undefined) {
+        if (this.dateInterval.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.markedService.update(this.marked), false);
+                this.dateIntervalService.update(this.dateInterval), false);
         } else {
             this.subscribeToSaveResponse(
-                this.markedService.create(this.marked), true);
+                this.dateIntervalService.create(this.dateInterval), true);
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Marked>, isCreated: boolean) {
-        result.subscribe((res: Marked) =>
+    private subscribeToSaveResponse(result: Observable<DateInterval>, isCreated: boolean) {
+        result.subscribe((res: DateInterval) =>
             this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Marked, isCreated: boolean) {
+    private onSaveSuccess(result: DateInterval, isCreated: boolean) {
         this.alertService.success(
-            isCreated ? `A new Marked is created with identifier ${result.id}`
-            : `A Marked is updated with identifier ${result.id}`,
+            isCreated ? `A new Date Interval is created with identifier ${result.id}`
+            : `A Date Interval is updated with identifier ${result.id}`,
             null, null);
 
-        this.eventManager.broadcast({ name: 'markedListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'dateIntervalListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -85,33 +87,33 @@ export class MarkedDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    trackOrganizerById(index: number, item: Organizer) {
+    trackMarkedById(index: number, item: Marked) {
         return item.id;
     }
 }
 
 @Component({
-    selector: 'jhi-marked-popup',
+    selector: 'jhi-date-interval-popup',
     template: ''
 })
-export class MarkedPopupComponent implements OnInit, OnDestroy {
+export class DateIntervalPopupComponent implements OnInit, OnDestroy {
 
     modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private markedPopupService: MarkedPopupService
+        private dateIntervalPopupService: DateIntervalPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
-                this.modalRef = this.markedPopupService
-                    .open(MarkedDialogComponent, params['id']);
+                this.modalRef = this.dateIntervalPopupService
+                    .open(DateIntervalDialogComponent, params['id']);
             } else {
-                this.modalRef = this.markedPopupService
-                    .open(MarkedDialogComponent);
+                this.modalRef = this.dateIntervalPopupService
+                    .open(DateIntervalDialogComponent);
             }
         });
     }

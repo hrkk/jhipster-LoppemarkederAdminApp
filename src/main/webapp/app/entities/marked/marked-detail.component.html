@@ -8,6 +8,44 @@
         <dd>
             <span>{{marked.name}}</span>
         </dd>
+        <dt><span>Marked Information</span></dt>
+        <dd>
+            <span>{{marked.markedInformation}}</span>
+        </dd>
+        <dt><span>Marked Rules</span></dt>
+        <dd>
+            <span>{{marked.markedRules}}</span>
+        </dd>
+        <dt><span>Entre Info</span></dt>
+        <dd>
+            <span>{{marked.entreInfo}}</span>
+        </dd>
+        <dt><span>Date Extra Info</span></dt>
+        <dd>
+            <span>{{marked.dateExtraInfo}}</span>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+            <span>{{marked.address}}</span>
+        </dd>
+        <dt><span>Latitude</span></dt>
+        <dd>
+            <span>{{marked.latitude}}</span>
+        </dd>
+        <dt><span>Longitude</span></dt>
+        <dd>
+            <span>{{marked.longitude}}</span>
+        </dd>
+        <dt><span>Enable Booking</span></dt>
+        <dd>
+            <span>{{marked.enableBooking}}</span>
+        </dd>
+        <dt><span>Organizer</span></dt>
+        <dd>
+            <div *ngIf="marked.organizer">
+                <a [routerLink]="['/organizer', marked.organizer?.id]">{{marked.organizer?.id}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

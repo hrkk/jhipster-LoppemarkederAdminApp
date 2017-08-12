@@ -41,6 +41,13 @@ public class CacheConfiguration {
             cm.createCache(dk.roninit.lopadminapp.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(dk.roninit.lopadminapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(dk.roninit.lopadminapp.domain.Marked.class.getName(), jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.Marked.class.getName() + ".dateInterval2S", jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.Marked.class.getName() + ".dateIntervals", jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.Marked.class.getName() + ".organizers", jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.DateInterval.class.getName(), jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.Organizer.class.getName(), jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.Organizer.class.getName() + ".markeds", jcacheConfiguration);
+            cm.createCache(dk.roninit.lopadminapp.domain.Organizer.class.getName() + ".marked2S", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

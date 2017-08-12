@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span>Markeds</span>
-        <button class="btn btn-primary float-right create-marked" [routerLink]="['/', { outlets: { popup: ['marked-new'] } }]">
+        <span>Date Intervals</span>
+        <button class="btn btn-primary float-right create-date-interval" [routerLink]="['/', { outlets: { popup: ['date-interval-new'] } }]">
             <span class="fa fa-plus"></span>
             <span class="hidden-sm-down" >
-            Create new Marked
+            Create new Date Interval
             </span>
         </button>
     </h2>
@@ -25,58 +25,44 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="markeds">
+    <div class="table-responsive" *ngIf="dateIntervals">
         <table class="table table-striped">
             <thead>
             <tr>
             <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Marked Information</span></th>
-            <th><span>Marked Rules</span></th>
-            <th><span>Entre Info</span></th>
-            <th><span>Date Extra Info</span></th>
-            <th><span>Address</span></th>
-            <th><span>Latitude</span></th>
-            <th><span>Longitude</span></th>
-            <th><span>Enable Booking</span></th>
-            <th><span>Organizer</span></th>
+            <th><span>From Date</span></th>
+            <th><span>To Date</span></th>
+            <th><span>Marked</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let marked of markeds ;trackBy: trackId">
-                <td><a [routerLink]="['../marked', marked.id ]">{{marked.id}}</a></td>
-                <td>{{marked.name}}</td>
-                <td>{{marked.markedInformation}}</td>
-                <td>{{marked.markedRules}}</td>
-                <td>{{marked.entreInfo}}</td>
-                <td>{{marked.dateExtraInfo}}</td>
-                <td>{{marked.address}}</td>
-                <td>{{marked.latitude}}</td>
-                <td>{{marked.longitude}}</td>
-                <td>{{marked.enableBooking}}</td>
+            <tr *ngFor="let dateInterval of dateIntervals ;trackBy: trackId">
+                <td><a [routerLink]="['../date-interval', dateInterval.id ]">{{dateInterval.id}}</a></td>
+                <td>{{dateInterval.fromDate | date:'mediumDate'}}</td>
+                <td>{{dateInterval.toDate | date:'mediumDate'}}</td>
                 <td>
-                    <div *ngIf="marked.organizer">
-                        <a [routerLink]="['../organizer', marked.organizer?.id ]" >{{marked.organizer?.id}}</a>
+                    <div *ngIf="dateInterval.marked">
+                        <a [routerLink]="['../marked', dateInterval.marked?.id ]" >{{dateInterval.marked?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../marked', marked.id ]"
+                                [routerLink]="['../date-interval', dateInterval.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'marked/'+ marked.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'date-interval/'+ dateInterval.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="hidden-md-down">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'marked/'+ marked.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'date-interval/'+ dateInterval.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>

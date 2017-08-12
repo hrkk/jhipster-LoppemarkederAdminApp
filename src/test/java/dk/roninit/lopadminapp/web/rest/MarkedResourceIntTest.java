@@ -41,6 +41,30 @@ public class MarkedResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_MARKED_INFORMATION = "AAAAAAAAAA";
+    private static final String UPDATED_MARKED_INFORMATION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MARKED_RULES = "AAAAAAAAAA";
+    private static final String UPDATED_MARKED_RULES = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ENTRE_INFO = "AAAAAAAAAA";
+    private static final String UPDATED_ENTRE_INFO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DATE_EXTRA_INFO = "AAAAAAAAAA";
+    private static final String UPDATED_DATE_EXTRA_INFO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final Double DEFAULT_LATITUDE = 1D;
+    private static final Double UPDATED_LATITUDE = 2D;
+
+    private static final Double DEFAULT_LONGITUDE = 1D;
+    private static final Double UPDATED_LONGITUDE = 2D;
+
+    private static final Boolean DEFAULT_ENABLE_BOOKING = false;
+    private static final Boolean UPDATED_ENABLE_BOOKING = true;
+
     @Autowired
     private MarkedRepository markedRepository;
 
@@ -81,7 +105,15 @@ public class MarkedResourceIntTest {
      */
     public static Marked createEntity(EntityManager em) {
         Marked marked = new Marked()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .markedInformation(DEFAULT_MARKED_INFORMATION)
+            .markedRules(DEFAULT_MARKED_RULES)
+            .entreInfo(DEFAULT_ENTRE_INFO)
+            .dateExtraInfo(DEFAULT_DATE_EXTRA_INFO)
+            .address(DEFAULT_ADDRESS)
+            .latitude(DEFAULT_LATITUDE)
+            .longitude(DEFAULT_LONGITUDE)
+            .enableBooking(DEFAULT_ENABLE_BOOKING);
         return marked;
     }
 
@@ -107,6 +139,14 @@ public class MarkedResourceIntTest {
         assertThat(markedList).hasSize(databaseSizeBeforeCreate + 1);
         Marked testMarked = markedList.get(markedList.size() - 1);
         assertThat(testMarked.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testMarked.getMarkedInformation()).isEqualTo(DEFAULT_MARKED_INFORMATION);
+        assertThat(testMarked.getMarkedRules()).isEqualTo(DEFAULT_MARKED_RULES);
+        assertThat(testMarked.getEntreInfo()).isEqualTo(DEFAULT_ENTRE_INFO);
+        assertThat(testMarked.getDateExtraInfo()).isEqualTo(DEFAULT_DATE_EXTRA_INFO);
+        assertThat(testMarked.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testMarked.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
+        assertThat(testMarked.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
+        assertThat(testMarked.isEnableBooking()).isEqualTo(DEFAULT_ENABLE_BOOKING);
 
         // Validate the Marked in Elasticsearch
         Marked markedEs = markedSearchRepository.findOne(testMarked.getId());
@@ -134,6 +174,150 @@ public class MarkedResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setName(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMarkedInformationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setMarkedInformation(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMarkedRulesIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setMarkedRules(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEntreInfoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setEntreInfo(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setAddress(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkLatitudeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setLatitude(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkLongitudeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setLongitude(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEnableBookingIsRequired() throws Exception {
+        int databaseSizeBeforeTest = markedRepository.findAll().size();
+        // set the field null
+        marked.setEnableBooking(null);
+
+        // Create the Marked, which fails.
+
+        restMarkedMockMvc.perform(post("/api/markeds")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(marked)))
+            .andExpect(status().isBadRequest());
+
+        List<Marked> markedList = markedRepository.findAll();
+        assertThat(markedList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllMarkeds() throws Exception {
         // Initialize the database
         markedRepository.saveAndFlush(marked);
@@ -143,7 +327,15 @@ public class MarkedResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(marked.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].markedInformation").value(hasItem(DEFAULT_MARKED_INFORMATION.toString())))
+            .andExpect(jsonPath("$.[*].markedRules").value(hasItem(DEFAULT_MARKED_RULES.toString())))
+            .andExpect(jsonPath("$.[*].entreInfo").value(hasItem(DEFAULT_ENTRE_INFO.toString())))
+            .andExpect(jsonPath("$.[*].dateExtraInfo").value(hasItem(DEFAULT_DATE_EXTRA_INFO.toString())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].enableBooking").value(hasItem(DEFAULT_ENABLE_BOOKING.booleanValue())));
     }
 
     @Test
@@ -157,7 +349,15 @@ public class MarkedResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(marked.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.markedInformation").value(DEFAULT_MARKED_INFORMATION.toString()))
+            .andExpect(jsonPath("$.markedRules").value(DEFAULT_MARKED_RULES.toString()))
+            .andExpect(jsonPath("$.entreInfo").value(DEFAULT_ENTRE_INFO.toString()))
+            .andExpect(jsonPath("$.dateExtraInfo").value(DEFAULT_DATE_EXTRA_INFO.toString()))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
+            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
+            .andExpect(jsonPath("$.enableBooking").value(DEFAULT_ENABLE_BOOKING.booleanValue()));
     }
 
     @Test
@@ -179,7 +379,15 @@ public class MarkedResourceIntTest {
         // Update the marked
         Marked updatedMarked = markedRepository.findOne(marked.getId());
         updatedMarked
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .markedInformation(UPDATED_MARKED_INFORMATION)
+            .markedRules(UPDATED_MARKED_RULES)
+            .entreInfo(UPDATED_ENTRE_INFO)
+            .dateExtraInfo(UPDATED_DATE_EXTRA_INFO)
+            .address(UPDATED_ADDRESS)
+            .latitude(UPDATED_LATITUDE)
+            .longitude(UPDATED_LONGITUDE)
+            .enableBooking(UPDATED_ENABLE_BOOKING);
 
         restMarkedMockMvc.perform(put("/api/markeds")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -191,6 +399,14 @@ public class MarkedResourceIntTest {
         assertThat(markedList).hasSize(databaseSizeBeforeUpdate);
         Marked testMarked = markedList.get(markedList.size() - 1);
         assertThat(testMarked.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testMarked.getMarkedInformation()).isEqualTo(UPDATED_MARKED_INFORMATION);
+        assertThat(testMarked.getMarkedRules()).isEqualTo(UPDATED_MARKED_RULES);
+        assertThat(testMarked.getEntreInfo()).isEqualTo(UPDATED_ENTRE_INFO);
+        assertThat(testMarked.getDateExtraInfo()).isEqualTo(UPDATED_DATE_EXTRA_INFO);
+        assertThat(testMarked.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testMarked.getLatitude()).isEqualTo(UPDATED_LATITUDE);
+        assertThat(testMarked.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
+        assertThat(testMarked.isEnableBooking()).isEqualTo(UPDATED_ENABLE_BOOKING);
 
         // Validate the Marked in Elasticsearch
         Marked markedEs = markedSearchRepository.findOne(testMarked.getId());
@@ -249,7 +465,15 @@ public class MarkedResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(marked.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].markedInformation").value(hasItem(DEFAULT_MARKED_INFORMATION.toString())))
+            .andExpect(jsonPath("$.[*].markedRules").value(hasItem(DEFAULT_MARKED_RULES.toString())))
+            .andExpect(jsonPath("$.[*].entreInfo").value(hasItem(DEFAULT_ENTRE_INFO.toString())))
+            .andExpect(jsonPath("$.[*].dateExtraInfo").value(hasItem(DEFAULT_DATE_EXTRA_INFO.toString())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].enableBooking").value(hasItem(DEFAULT_ENABLE_BOOKING.booleanValue())));
     }
 
     @Test
