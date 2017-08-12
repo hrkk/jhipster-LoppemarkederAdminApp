@@ -592,7 +592,7 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>org.h2.Driver</driver>
-                    <url>jdbc:h2:file:./target/h2db/db/lopadminapp</url>
+                    <url>jdbc:h2:file:./h2db/db/lopadminappDS</url>
                     <defaultSchemaName></defaultSchemaName>
                     <username>lopadminapp</username>
                     <password></password>
