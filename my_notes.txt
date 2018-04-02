@@ -1,0 +1,18 @@
+2017-08-12T06:23:55.337047Z 1 [Note] A temporary password is generated for root@localhost: ek7((dj(Tg39 -> CHANGED to 'admin'
+
+If you lose this password, please consult the section How to Reset the Root Password in the MySQL reference manual.
+
+--------
+
+http://osxdaily.com/2014/11/26/start-stop-mysql-commands-mac-os-x/
+https://www.garron.me/en/bits/create-database-user-set-grant-privileges-mysql-console-terminal.html
+Login på Mysql admin console 
+
+export PATH=${PATH}:/usr/local/mysql/bin
+mysql -u root -p 
+
+password: admin
+
+-------
+https://dzone.com/articles/getting-started-with-jhipster-part-i?fromrel=true
+
