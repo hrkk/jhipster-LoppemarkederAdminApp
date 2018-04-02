@@ -1,0 +1,22 @@
+entity Marked {
+	name String required minlength(3) maxlength(50),
+    markedInformation String required minlength(1) maxlength(256)
+    markedRules String required minlength(1) maxlength(256)
+    entreInfo String required minlength(1) maxlength(256)
+    dateExtraInfo String maxlength(256)
+    address String required minlength(2) maxlength(256)
+    fromDate LocalDate required
+    toDate LocalDate required
+    latitude Double required
+    longitude Double required
+    enableBooking Boolean required
+}
+
+entity Organizer {
+	name String required required minlength(3) maxlength(50)
+    email String required required maxlength(100)
+}
+
+relationship OneToMany {
+  Organizer{marked} to Marked{organizer}
+}

@@ -1,0 +1,72 @@
+
+<div *ngIf="marked">
+    <h2><span>Marked</span> {{marked.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{marked.name}}</span>
+        </dd>
+        <dt><span>Marked Information</span></dt>
+        <dd>
+            <span>{{marked.markedInformation}}</span>
+        </dd>
+        <dt><span>Marked Rules</span></dt>
+        <dd>
+            <span>{{marked.markedRules}}</span>
+        </dd>
+        <dt><span>Entre Info</span></dt>
+        <dd>
+            <span>{{marked.entreInfo}}</span>
+        </dd>
+        <dt><span>Date Extra Info</span></dt>
+        <dd>
+            <span>{{marked.dateExtraInfo}}</span>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+            <span>{{marked.address}}</span>
+        </dd>
+        <dt><span>From Date</span></dt>
+        <dd>
+            <span>{{marked.fromDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>To Date</span></dt>
+        <dd>
+            <span>{{marked.toDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Latitude</span></dt>
+        <dd>
+            <span>{{marked.latitude}}</span>
+        </dd>
+        <dt><span>Longitude</span></dt>
+        <dd>
+            <span>{{marked.longitude}}</span>
+        </dd>
+        <dt><span>Enable Booking</span></dt>
+        <dd>
+            <span>{{marked.enableBooking}}</span>
+        </dd>
+        <dt><span>Organizer</span></dt>
+        <dd>
+            <div *ngIf="marked.organizer">
+                <a [routerLink]="['/organizer', marked.organizer?.id]">{{marked.organizer?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'marked/'+ marked.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

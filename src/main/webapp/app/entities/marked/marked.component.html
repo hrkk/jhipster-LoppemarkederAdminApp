@@ -1,0 +1,97 @@
+<div>
+    <h2>
+        <span>Markeds</span>
+        <button class="btn btn-primary float-right jh-create-entity create-marked" [routerLink]="['/', { outlets: { popup: ['marked-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down" >
+            Create new Marked
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="markeds">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Marked Information</span></th>
+            <th><span>Marked Rules</span></th>
+            <th><span>Entre Info</span></th>
+            <th><span>Date Extra Info</span></th>
+            <th><span>Address</span></th>
+            <th><span>From Date</span></th>
+            <th><span>To Date</span></th>
+            <th><span>Latitude</span></th>
+            <th><span>Longitude</span></th>
+            <th><span>Enable Booking</span></th>
+            <th><span>Organizer</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let marked of markeds ;trackBy: trackId">
+                <td><a [routerLink]="['../marked', marked.id ]">{{marked.id}}</a></td>
+                <td>{{marked.name}}</td>
+                <td>{{marked.markedInformation}}</td>
+                <td>{{marked.markedRules}}</td>
+                <td>{{marked.entreInfo}}</td>
+                <td>{{marked.dateExtraInfo}}</td>
+                <td>{{marked.address}}</td>
+                <td>{{marked.fromDate | date:'mediumDate'}}</td>
+                <td>{{marked.toDate | date:'mediumDate'}}</td>
+                <td>{{marked.latitude}}</td>
+                <td>{{marked.longitude}}</td>
+                <td>{{marked.enableBooking}}</td>
+                <td>
+                    <div *ngIf="marked.organizer">
+                        <a [routerLink]="['../organizer', marked.organizer?.id ]" >{{marked.organizer?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../marked', marked.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'marked/'+ marked.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'marked/'+ marked.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

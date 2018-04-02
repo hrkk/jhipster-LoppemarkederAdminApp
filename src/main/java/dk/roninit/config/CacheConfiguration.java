@@ -42,6 +42,9 @@ public class CacheConfiguration {
             cm.createCache(dk.roninit.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(dk.roninit.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(dk.roninit.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(dk.roninit.domain.Marked.class.getName(), jcacheConfiguration);
+            cm.createCache(dk.roninit.domain.Organizer.class.getName(), jcacheConfiguration);
+            cm.createCache(dk.roninit.domain.Organizer.class.getName() + ".markeds", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
