@@ -1,13 +1,19 @@
 package dk.roninit.web.rest;
 
 import dk.roninit.domain.Marked;
+import dk.roninit.domain.Organizer;
+import dk.roninit.model.MarkedItemInstanceList;
 import dk.roninit.model.MarkedItemView;
 import dk.roninit.repository.MarkedRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import dk.roninit.repository.OrganizerRepository;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -15,13 +21,16 @@ import java.util.stream.Collectors;
 public class MarkedResourceMobil {
 
     private final MarkedRepository markedRepository;
+    private final OrganizerRepository organizerRepository;
 
-    public MarkedResourceMobil(MarkedRepository markedRepository) {
+    public MarkedResourceMobil(MarkedRepository markedRepository, OrganizerRepository organizerRepository) {
+
         this.markedRepository = markedRepository;
+        this.organizerRepository = organizerRepository;
     }
 
     @GetMapping("/markeds")
-    public List<MarkedItemView> list() {
+    public ResponseEntity<MarkedItemInstanceList> list() {
         List<Marked> all = markedRepository.findAll();
 
         //MarkedItemView
@@ -30,7 +39,39 @@ public class MarkedResourceMobil {
 //        }
 
         List<MarkedItemView> views = all.stream().map(e -> createMarkedItemView(e)).collect(Collectors.toList());
-        return views;
+
+        MarkedItemInstanceList list = new MarkedItemInstanceList();
+        list.setList(views);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(list));
+    }
+
+    @PostMapping("/markeds")
+    public ResponseEntity<?> addMarked(@RequestBody MarkedItemView view) {
+
+        Organizer organizer = new Organizer();
+        organizer.setEmail(view.getOrganizerEmail());
+        organizer.setName(view.getOrganizerName());
+
+        Organizer organizerSaved = organizerRepository.saveAndFlush(organizer);
+
+        Marked marked = new Marked();
+        marked.setOrganizer(organizerSaved);
+        marked.setAddress(view.getAddress());
+        marked.setEnableBooking(true);
+        marked.setEntreInfo(view.getEntreInfo());
+        marked.setDateExtraInfo(view.getAdditionalOpenTimePeriod());
+        marked.setFromDate(view.getFromDate());
+        marked.setLatitude(view.getLatitude());
+        marked.setLongitude(view.getLongitude());
+        marked.setMarkedInformation(view.getMarkedInformation());
+        marked.setMarkedRules(view.getMarkedRules());
+        marked.setName(view.getName());
+        marked.setToDate(view.getToDate());
+
+
+        markedRepository.saveAndFlush(marked);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private MarkedItemView createMarkedItemView(Marked m) {
