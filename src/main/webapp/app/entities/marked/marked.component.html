@@ -61,7 +61,7 @@
                 <td>{{marked.enableBooking}}</td>
                 <td>
                     <div *ngIf="marked.organizer">
-                        <a [routerLink]="['../organizer', marked.organizer?.id ]" >{{marked.organizer?.id}}</a>
+                        <a [routerLink]="['../organizer', marked.organizer?.id ]" >{{marked.organizer?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

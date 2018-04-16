@@ -54,10 +54,15 @@ spring:
                 username: qo9cuisnzl
                 password: zdcqdko0c3
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: markedsbooking@gmail.com
+        password: android12
+        protocol: smtp
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     thymeleaf:
         cache: true
 
